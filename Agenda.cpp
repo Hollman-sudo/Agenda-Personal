@@ -10,7 +10,6 @@
 #include <string>    // manejar de cadenas de texto 
 #include <limits>    // para evitar leer datos mal de un usuario
 
-
 using namespace std; 
 
 
@@ -32,13 +31,43 @@ void pantallaBienvenida(); //funcion para mostrar la pantalla de bienvenida
 
 
 
-// FUNCION PRINCIPAL
+// main
 int main() {
-    system("cls"); // Limpiar la consola 
-    system("color F1"); // Color de texto y fondo 
-    cout << "\n\n\t\t UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS\n";   // !Esto se tiene que mandar a función de la pantalla de bienvenida
-    cout << "\t\t=========================================================\n\n";
-
-    cout << "Agendita"; 
+    pantallaBienvenida(); // Mostrar pantalla de bienvenida antes del menu
     return 0;
+}
+
+//FUNCIONES
+
+void pantallaBienvenida(){   // Esta función  es la pantalla de bienvenida aca va el Art ASCII y pues la bienvenida 
+    system("cls"); // Limpiar la pantalla
+    system("color F1");  
+
+    //Bienvenida y logo ASCII
+    cout << "===================================================================\n";
+    cout << "\n\n \t\t  UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS\n";
+    cout << "\t\t =================================================\n\n";
+
+
+    cout << "\t\t      ********    *****  ****  **  **   ****     ***       \n";
+    cout << "\t\t      **    **   **      *     *** **   **  *   **  **        \n";
+    cout << "\t\t      **    **   **      *     *** **   **  *   **  **        \n";
+    cout << "\t\t      ********  **  ***  ****  ** ***   **  *  ********   \n";
+    cout << "\t\t      **    **  **    *  **    **  **   **  *  **    **   \n";
+    cout << "\t\t      **    **   *****   ***** **  **   ****   **    **        \n\n\n";
+    
+    cout <<"\t\t    ******  *****   ******   *****   ******  **  **   *******   **  \n";
+    cout <<"\t\t    **  **  **      **  **    **     ******  *** **   **   **   **  \n";
+    cout <<"\t\t    **  **  *****   **  **     **    *    *  ******   **   **   **  \n";
+    cout <<"\t\t    ******  **      ******      **   *    *  ** ***   *******   **  \n";
+    cout <<"\t\t    **      **      **  *    *   *   *    *  **  **   **   **   **  \n";
+    cout <<"\t\t    **      **  *   **   *   *   **  ******  **  **   **   **   ***  \n";
+    cout <<"\t\t    **      *****   **   *    *****  ******  **  **   **   **   ********\n\n\n";
+
+    cout << "================================================================================ \n\n";
+    cout << "\t\t  [ Presione ENTER para INGRESAR al programa ] \n\n";
+
+    //Valida solo que ingrese enter
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // <streamsize>::max es no tener limite de caracteres ignorados
+    
 }
