@@ -34,6 +34,28 @@ void pantallaBienvenida(); //funcion para mostrar la pantalla de bienvenida
 // main
 int main() {
     pantallaBienvenida(); // Mostrar pantalla de bienvenida antes del menu
+    int opcion = 0; // Variable para la opcion del menu seleccionada por el usuario
+
+    system("cls"); // Limpiar la pantalla
+    system("color 1F");   
+
+    //mensaje de que ha ingresado a la agenda 
+    cout << "\n\n\t\t==========================================\n"; 
+    cout << "\t\t      BIENVENIDO A LA AGENDA PERSONAL     \n";
+    cout << "\t\t==========================================\n";
+
+    //bucle para no salir del programa hasta que sea ponga la opcion de salir
+    do
+    {
+        cout<< "\t\tseleccione una opcion: ";
+        cin >> opcion; // Leer la opcion seleccionada por el usuario !!!
+        mostrarMenu(); // Mostrar el menu de opciones al usuario
+
+    } while (opcion != 6); // El programa se ejecuta hasta que el usuario seleccione la opcion 6 para salir
+    
+
+    mostrarMenu(); // Mostrar el menu de opciones al usuario
+
     return 0;
 }
 
@@ -63,11 +85,26 @@ void pantallaBienvenida(){   // Esta función  es la pantalla de bienvenida aca 
     cout <<"\t\t    **      **      **  *    *   *   *    *  **  **   **   **   **  \n";
     cout <<"\t\t    **      **  *   **   *   *   **  ******  **  **   **   **   ***  \n";
     cout <<"\t\t    **      *****   **   *    *****  ******  **  **   **   **   ********\n\n\n";
+    cout <<"\t======================================================================================\n\n";
+    // Boton de ingreso
 
-    cout << "================================================================================ \n\n";
     cout << "\t\t  [ Presione ENTER para INGRESAR al programa ] \n\n";
-
+    cout << "===================================================================\n\n";
     //Valida solo que ingrese enter
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // <streamsize>::max es no tener limite de caracteres ignorados
-    
+
+}
+
+// Función para mostrar el menu de opciones al usuario
+void mostrarMenu() {
+    cout << "\n\t\t ==========================================\n";
+    cout << "\t\t              MENU PRINCIPAL                 \n";
+    cout << "\t\t ==========================================\n";
+    cout << "\t\t  1. Agregar nueva cita\n";
+    cout << "\t\t  2. Consultar todas las citas\n";
+    cout << "\t\t  3. Buscar cita por fecha\n";
+    cout << "\t\t  4. Editar cita\n";
+    cout << "\t\t  5. Eliminar cita\n";
+    cout << "\t\t  6. Salir del programa\n";
+    cout << "\t\t ==========================================\n";
 }
