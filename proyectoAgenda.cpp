@@ -66,7 +66,7 @@ int main() {
 
 //FUNCIONES
 
-void pantallaBienvenida(){   // Esta función  es la pantalla de bienvenida aca va el Art ASCII y pues la bienvenida 
+void pantallaBienvenida(){   // Esta funciï¿½n  es la pantalla de bienvenida aca va el Art ASCII y pues la bienvenida 
     system("cls"); // Limpiar la pantalla
     system("color 03");  
 
@@ -100,7 +100,7 @@ void pantallaBienvenida(){   // Esta función  es la pantalla de bienvenida aca v
 
 }
 
-// Función para mostrar el menu de opciones al usuario
+// Funciï¿½n para mostrar el menu de opciones al usuario
 void menu() {
 	int opcion;
 	system("cls");
@@ -136,7 +136,7 @@ void menu() {
 void agregarCita(){
 char continuar;
 cout <<"Ingrese fecha";
-cout <<"¿Desea continuar? s o n";
+cout <<"ï¿½Desea continuar? s o n";
 cin >> continuar;
 if (continuar=='s'){
 	agregarCita();
@@ -149,22 +149,22 @@ if (continuar=='s'){
 // Funcion para la segunda opcion
 void consultarCitas(){
 cout <<"Lista de citas actualmente";
-cout <<"¿Desea continuar? s/n";
+cout <<"ï¿½Desea continuar? s/n";
 }
 // Funcion para la tercera opcion
 void buscarCita(){
 cout <<"Ingrese fecha o nombre de cita a buscar";
-cout <<"¿Desea continuar? s/n";
+cout <<"ï¿½Desea continuar? s/n";
 }
 // Funcion para la cuarta opcion
 void editarCita(){
 cout <<"Ingrese fecha o nombre de cita a editar";
-cout <<"¿Desea continuar? s/n";
+cout <<"ï¿½Desea continuar? s/n";
 }
 // Funcion para la quinta opcion
 void eliminarCita(){
 cout <<"Ingrese fecha o nombre de cita a eliminar";
-cout <<"¿Desea continuar? s/n";
+cout <<"ï¿½Desea continuar? s/n";
 }
 // Funcion para la sexta opcion
 void finalizacion(){

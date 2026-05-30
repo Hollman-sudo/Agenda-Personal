@@ -9,6 +9,7 @@
 #include <fstream>  // para manejo de archivos con ifstream y ofstream
 #include <string>    // manejar de cadenas de texto 
 #include <limits>    // para evitar leer datos mal de un usuario
+#include <ctime>      // para manejar fechas y horas
 
 using namespace std; 
 
@@ -24,18 +25,18 @@ struct Cita {
 void pantallaBienvenida(); //funcion para mostrar la pantalla de bienvenida
     void mostrarMenu(); // para mostrar el menu de opciones al usuario
     void agregarCita(); // para agregar una nueva cita a la agenda
-    void consultarTodasLasCitas(); // funcion para mostrar todas las citas registradas en la agenda
-    void buscarCitaPorFecha(); // funcion para buscar y mostrar las citas registradas en una fecha especifica
+    void consultarCitas(); // funcion para mostrar todas las citas registradas en la agenda
+    void buscarCita(); // funcion para buscar y mostrar las citas registradas en una fecha especifica
     void editarCita(); // funcion para editar una cita existente en la agenda
     void eliminarCita(); // funcion para eliminar una cita de la agenda
 
 
-
 // main
 int main() {
-    pantallaBienvenida(); // Mostrar pantalla de bienvenida antes del menu
+    //variables 
     int opcion = 0; // Variable para la opcion del menu seleccionada por el usuario
-
+    char continuar;
+    pantallaBienvenida(); // Mostrar pantalla de bienvenida antes del menu
     system("cls"); // Limpiar la pantalla
     system("color 1F");   
 
@@ -44,18 +45,32 @@ int main() {
     cout << "\t\t      BIENVENIDO A LA AGENDA PERSONAL     \n";
     cout << "\t\t==========================================\n";
 
-    //bucle para no salir del programa hasta que sea ponga la opcion de salir
-    do
-    {
-        cout<< "\t\tseleccione una opcion: ";
-        cin >> opcion; // Leer la opcion seleccionada por el usuario !!!
+    // Bucle para no salir del programa hasta que se ponga la opcion de salir
+    do {
         mostrarMenu(); // Mostrar el menu de opciones al usuario
+        cout<< "\t\tseleccione una opcion: ";
+        cin >> opcion; // Leer la opcion seleccionada por el usuario
 
-    } while (opcion != 6); // El programa se ejecuta hasta que el usuario seleccione la opcion 6 para salir
-    
-
-    mostrarMenu(); // Mostrar el menu de opciones al usuario
-
+        if (opcion == 1) { //opción #1
+            agregarCita(); // Llamar a la función para agregar una nueva cita a la agenda
+        } else if (opcion == 2) {//opción #2
+            consultarCitas(); // Llamar a la función para mostrar todas las citas registradas en la agenda
+        } else if (opcion == 3) { //opción #3
+            buscarCita(); // Llamar a la función para buscar y mostrar las citas registradas en una fecha especifica
+        } else if (opcion == 4) { //opción #4
+            editarCita(); // Llamar a la función para editar una cita existente en la agenda
+        } else if (opcion == 5) { //opción #5
+            eliminarCita(); // Llamar a la función para eliminar una cita de la agenda
+        } else if (opcion == 6) { //opción #6
+            system("cls");
+            system("color 0C"); 
+            cout << "\n=======================================================\n";
+            cout << "\n\tEste programa ha finalizado. Gracias por utilizarlo.\n";
+            cout << "\n=======================================================\n";
+        } else {
+            cout << "\nOpcion invalida. Por favor, elija una opcion del 1 al 6.\n";
+        }
+    } while (opcion != 6);
     return 0;
 }
 
@@ -108,3 +123,4 @@ void mostrarMenu() {
     cout << "\t\t  6. Salir del programa\n";
     cout << "\t\t ==========================================\n";
 }
+
