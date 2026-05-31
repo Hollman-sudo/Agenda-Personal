@@ -9,8 +9,8 @@
 #include <fstream>  // para manejo de archivos con ifstream y ofstream
 #include <string>    // manejar de cadenas de texto 
 #include <limits>    // para evitar leer datos mal de un usuario
-#include <ctime>      // para manejar fechas y horas
-
+#include <ctime>
+#include <cstdlib>    //  las 2 librerias para manejar fechas y horas
 using namespace std; 
 
 
@@ -20,9 +20,12 @@ struct Cita {
     string hora;         // HH:MM
     string descripcion; 
 };
+// ARREGLO GLOBAL de citas y contador
+Cita agenda[100]; // Arreglo para almacenar hasta 100 citas
+int totalCitas = 0; // Contador de citas registradas
 
 //Prototipos de funciones 
-void pantallaBienvenida(); //funcion para mostrar la pantalla de bienvenida
+    void pantallaBienvenida(); //funcion para mostrar la pantalla de bienvenida
     void mostrarMenu(); // para mostrar el menu de opciones al usuario
     void agregarCita(); // para agregar una nueva cita a la agenda
     void consultarCitas(); // funcion para mostrar todas las citas registradas en la agenda
@@ -124,3 +127,134 @@ void mostrarMenu() {
     cout << "\t\t ==========================================\n";
 }
 
+void agregarCita(){
+    cout << "\n\t\t====== AGREGAR NUEVA CITA ======\n\n";
+
+    if (totalCitas >= 100) {
+        system("color 4F");
+        cout << "\t\t[!] La agenda esta llena. No se pueden agregar mas citas.\n\n";
+        system("pause");
+        return;
+    }
+
+    // --- FECHA ---
+    string fecha;
+    int diaNum, mesNum, anioNum;
+    int fechaOk = 0;
+
+    cout << "\t\tIngrese la fecha (DD/MM/AAAA): ";
+    cin >> fecha;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Validar formato: longitud 10, separadores en posicion 2 y 5
+    if (fecha.size() == 10 && fecha[2] == '/' && fecha[5] == '/') {
+        // extraer dia, mes, anio como numeros
+        diaNum  = (fecha[0]-'0')*10 + (fecha[1]-'0');
+        mesNum  = (fecha[3]-'0')*10 + (fecha[4]-'0');
+        anioNum = (fecha[6]-'0')*1000 + (fecha[7]-'0')*100
+                + (fecha[8]-'0')*10   + (fecha[9]-'0');
+
+        if (mesNum >= 1 && mesNum <= 12 && diaNum >= 1 && diaNum <= 31
+            && anioNum >= 1900 && anioNum <= 2100) {
+            fechaOk = 1;
+        }
+    }
+
+    while (fechaOk == 0) {
+        system("color 4F");
+        cout << "\t\t[!] Fecha invalida. Use el formato DD/MM/AAAA.\n";
+        system("color 3F");
+        cout << "\t\tIngrese la fecha (DD/MM/AAAA): ";
+        cin >> fecha;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        fechaOk = 0;
+        if (fecha.size() == 10 && fecha[2] == '/' && fecha[5] == '/') {
+            diaNum  = (fecha[0]-'0')*10 + (fecha[1]-'0');
+            mesNum  = (fecha[3]-'0')*10 + (fecha[4]-'0');
+            anioNum = (fecha[6]-'0')*1000 + (fecha[7]-'0')*100
+                    + (fecha[8]-'0')*10   + (fecha[9]-'0');
+
+            if (mesNum >= 1 && mesNum <= 12 && diaNum >= 1 && diaNum <= 31
+                && anioNum >= 1900 && anioNum <= 2100) {
+                fechaOk = 1;
+            }
+        }
+    }
+
+    // --- HORA ---
+    string hora;
+    int horaNum, minNum;
+    int horaOk = 0;
+
+    cout << "\t\tIngrese la hora (HH:MM): ";
+    cin >> hora;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    if (hora.size() == 5 && hora[2] == ':') {
+        horaNum = (hora[0]-'0')*10 + (hora[1]-'0');
+        minNum  = (hora[3]-'0')*10 + (hora[4]-'0');
+
+        if (horaNum >= 0 && horaNum <= 23 && minNum >= 0 && minNum <= 59) {
+            horaOk = 1;
+        }
+    }
+
+    while (horaOk == 0) {
+        system("color 4F");
+        cout << "\t\t[!] Hora invalida. Use el formato HH:MM (00:00 a 23:59).\n";
+        system("color 3F");
+        cout << "\t\tIngrese la hora (HH:MM): ";
+        cin >> hora;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        horaOk = 0;
+        if (hora.size() == 5 && hora[2] == ':') {
+            horaNum = (hora[0]-'0')*10 + (hora[1]-'0');
+            minNum  = (hora[3]-'0')*10 + (hora[4]-'0');
+
+            if (horaNum >= 0 && horaNum <= 23 && minNum >= 0 && minNum <= 59) {
+                horaOk = 1;
+            }
+        }
+    }
+
+    // --- DESCRIPCION ---
+    string descripcion;
+    cout << "\t\tIngrese la descripcion (max. 100 caracteres): ";
+    getline(cin, descripcion);
+
+    if ((int)descripcion.size() > 100) {
+        descripcion = descripcion.substr(0, 100);
+        cout << "\t\t[!] Descripcion truncada a 100 caracteres.\n";
+    }
+
+    // --- GUARDAR EN ARREGLO Y ARCHIVO ---
+    agenda[totalCitas].fecha       = fecha;
+    agenda[totalCitas].hora        = hora;
+    agenda[totalCitas].descripcion = descripcion;
+    totalCitas++;
+
+    guardarEnArchivo();
+
+    system("color 2F");
+    cout << "\n\t\t[OK] Cita guardada correctamente.\n\n";
+    system("pause");
+}
+
+//Guardar en archivo teniendo en cuenta registros
+void guardarEnArchivo() {
+    ofstream archivo("agenda.txt");
+    if (archivo.is_open()) {
+        int i = 0;
+        while (i < totalCitas) {
+            archivo << agenda[i].fecha << "," << agenda[i].hora << "," << agenda[i].descripcion << "\n";
+            i++;
+        }
+        archivo.close();
+    } else {
+        system("color 4F");
+        cout << "\t\t[!] Error al guardar en el archivo.\n\n";
+        system("pause");
+    }
+}
