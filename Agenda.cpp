@@ -32,7 +32,7 @@ int totalCitas = 0; // Contador de citas registradas
     void buscarCita(); // funcion para buscar y mostrar las citas registradas en una fecha especifica
     void editarCita(); // funcion para editar una cita existente en la agenda
     void eliminarCita(); // funcion para eliminar una cita de la agenda
-
+    void guardarEnArchivo(); // Funnción para guardar
 
 // main
 int main() {
@@ -257,4 +257,30 @@ void guardarEnArchivo() {
         cout << "\t\t[!] Error al guardar en el archivo.\n\n";
         system("pause");
     }
+}
+
+// Consultar las citas que hay guardadas
+void consultarCitas() {
+    system("cls");
+    system("color 1F");
+    cout << "\n\t\t====== CONSULTAR TODAS LAS CITAS ======\n\n";
+
+    if (totalCitas == 0) {
+        cout << "\t\t[!] No hay citas registradas en la agenda.\n\n";
+        system("pause");
+        return;
+    }
+
+    cout << "\t\tID\tFECHA\t\tHORA\tDESCRIPCION\n";
+    cout << "\t\t-----------------------------------------------------------\n";
+    
+    for (int i = 0; i < totalCitas; i++) {
+        cout << "\t\t[" << (i + 1) << "]\t" 
+             << agenda[i].fecha << "\t" 
+             << agenda[i].hora << "\t" 
+             << agenda[i].descripcion << "\n";
+    }
+
+    cout << "\n";
+    system("pause");
 }
