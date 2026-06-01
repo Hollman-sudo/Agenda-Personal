@@ -284,3 +284,44 @@ void consultarCitas() {
     cout << "\n";
     system("pause");
 }
+
+// Buscar citas en especifico mediante fechas
+void buscarCita() {
+    system("cls");
+    system("color 1F");
+    cout << "\n\t\t====== BUSCAR CITA POR FECHA ======\n\n";
+
+    if (totalCitas == 0) {
+        cout << "\t\t[!] No hay citas registradas en la agenda.\n\n";
+        system("pause");
+        return;
+    }
+
+    string fechaBusqueda;
+    cout << "\t\tIngrese la fecha a buscar (DD/MM/AAAA): ";
+    cin >> fechaBusqueda;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "\n\t\tResultados para la fecha [" << fechaBusqueda << "]:\n";
+    cout << "\t\t-----------------------------------------------------------\n";
+
+    bool encontrado = false; // Para saber si encontramos al menos una
+
+    // Recorrer el arreglo buscando coincidencias
+    for (int i = 0; i < totalCitas; i++) {
+        if (agenda[i].fecha == fechaBusqueda) {
+            cout << "\t\t-> Hora: " << agenda[i].hora 
+                 << " | Descripcion: " << agenda[i].descripcion << "\n";
+            encontrado = true;
+        }
+    }
+
+    // Si terminó el ciclo y no se encontró nada
+    if (!encontrado) {
+        system("color 4F");
+        cout << "\t\t[!] No se encontraron citas pendientes para esa fecha.\n";
+    }
+
+    cout << "\n";
+    system("pause");
+}
