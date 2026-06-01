@@ -32,13 +32,17 @@ int totalCitas = 0; // Contador de citas registradas
     void buscarCita(); // funcion para buscar y mostrar las citas registradas en una fecha especifica
     void editarCita(); // funcion para editar una cita existente en la agenda
     void eliminarCita(); // funcion para eliminar una cita de la agenda
-    void guardarEnArchivo(); // Funnción para guardar
+    void guardarEnArchivo(); // Función para guardar
+    void cargarDesdeArchivo(); // Función para cargar archivos ya existentes
 
 // main
 int main() {
     //variables 
     int opcion = 0; // Variable para la opcion del menu seleccionada por el usuario
     char continuar;
+
+    cargarDesdeArchivo(); // Llamar a la función para ver si hay un archivo existente, sino, crearlo con la primera cita
+
     pantallaBienvenida(); // Mostrar pantalla de bienvenida antes del menu
     system("cls"); // Limpiar la pantalla
     system("color 1F");   
@@ -458,4 +462,37 @@ void eliminarCita() {
     }
 
     system("pause");
+}
+
+
+// Cargar el archivo si existe
+void cargarDesdeArchivo() {
+    ifstream archivo("agenda.txt");
+    if (!archivo.is_open()) {
+        // Si el archivo no existe, no hacemos nada (se creará al agregar la primera cita)
+        return;
+    }
+
+    totalCitas = 0; // Reiniciar por seguridad
+    string linea;
+
+    // Leer el archivo línea por línea separando por comas
+    while (getline(archivo, linea) && totalCitas < 100) {
+        if (linea.empty()) continue;
+
+        // Encontrar las posiciones de las comas para cortar el texto
+
+        cargarDesdeArchivo(); // Llamar a la función para ver si hay un archivo existente, sino, crearlo con la primera cita
+
+        size_t pos1 = linea.find(',');
+        size_t pos2 = linea.find(',', pos1 + 1);
+
+        if (pos1 != string::npos && pos2 != string::npos) {
+            agenda[totalCitas].fecha = linea.substr(0, pos1);
+            agenda[totalCitas].hora = linea.substr(pos1 + 1, pos2 - pos1 - 1);
+            agenda[totalCitas].descripcion = linea.substr(pos2 + 1);
+            totalCitas++;
+        }
+    }
+    archivo.close();
 }
