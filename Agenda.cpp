@@ -325,3 +325,75 @@ void buscarCita() {
     cout << "\n";
     system("pause");
 }
+
+
+// Editar las citas existentes
+void editarCita() {
+    system("cls");
+    system("color 1F");
+    cout << "\n\t\t====== EDITAR CITA EXISTENTE ======\n\n";
+
+    if (totalCitas == 0) {
+        cout << "\t\t[!] No hay citas registradas para editar.\n\n";
+        system("pause");
+        return;
+    }
+
+    // Mostrar las citas actuales para que el usuario conozca los IDs disponibles
+    cout << "\t\tCitas disponibles:\n";
+    cout << "\t\t-----------------------------------------------------------\n";
+    for (int i = 0; i < totalCitas; i++) {
+        cout << "\t\t[" << (i + 1) << "] " << agenda[i].fecha << " - " << agenda[i].hora << " : " << agenda[i].descripcion << "\n";
+    }
+
+    int numeroCita;
+    cout << "\n\t\tSeleccione el numero de ID de la cita a editar: ";
+    cin >> numeroCita;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Validar que el índice ingresado exista en el arreglo
+    if (numeroCita < 1 || numeroCita > totalCitas) {
+        system("color 4F");
+        cout << "\t\t[!] Numero de ID invalido.\n\n";
+        system("pause");
+        return;
+    }
+
+    int idx = numeroCita - 1; // Ajustar al índice real del arreglo (0-indexed)
+
+    string nuevaFecha, nuevaHora, nuevaDescripcion;
+
+    cout << "\n\t\t--- Deje en blanco (presione ENTER) si no desea cambiar el campo ---\n";
+    
+    // Editar Fecha
+    cout << "\t\tNueva fecha (Actual: " << agenda[idx].fecha << "): ";
+    getline(cin, nuevaFecha);
+    if (!nuevaFecha.empty()) {
+        // Guardamos directamente si el usuario digita algo nuevo
+        agenda[idx].fecha = nuevaFecha;
+    }
+
+    // Editar Hora
+    cout << "\t\tNueva hora (Actual: " << agenda[idx].hora << "): ";
+    getline(cin, nuevaHora);
+    if (!nuevaHora.empty()) {
+        agenda[idx].hora = nuevaHora;
+    }
+
+    // Editar Descripción
+    cout << "\t\tNueva descripcion (Actual: " << agenda[idx].descripcion << "): ";
+    getline(cin, nuevaDescripcion);
+    if (!nuevaDescripcion.empty()) {
+        if ((int)nuevaDescripcion.size() > 100) {
+            nuevaDescripcion = nuevaDescripcion.substr(0, 100);
+        }
+        agenda[idx].descripcion = nuevaDescripcion;
+    }
+
+    // Criterio 15: Guardar los cambios automáticamente en el archivo físico
+    guardarEnArchivo();
+
+    system("color 2F");
+    cout << "\n\t\t[OK] Cita modificada y guardada con exito.\n\n";
+    system("pause");
+}
