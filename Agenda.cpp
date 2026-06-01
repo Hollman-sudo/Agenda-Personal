@@ -397,3 +397,65 @@ void editarCita() {
     cout << "\n\t\t[OK] Cita modificada y guardada con exito.\n\n";
     system("pause");
 }
+
+
+// Eliminar una cita existente
+void eliminarCita() {
+    system("cls");
+    system("color 1F");
+    cout << "\n\t\t====== ELIMINAR CITA DE LA AGENDA ======\n\n";
+
+    if (totalCitas == 0) {
+        cout << "\t\t[!] No hay citas registradas para eliminar.\n\n";
+        system("pause");
+        return;
+    }
+
+    // Mostrar las citas actuales
+    cout << "\t\tCitas registradas:\n";
+    cout << "\t\t-----------------------------------------------------------\n";
+    for (int i = 0; i < totalCitas; i++) {
+        cout << "\t\t[" << (i + 1) << "] " << agenda[i].fecha << " - " << agenda[i].hora << " : " << agenda[i].descripcion << "\n";
+    }
+
+    int numeroCita;
+    cout << "\n\t\tSeleccione el numero de ID de la cita que desea eliminar: ";
+    cin >> numeroCita;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Validar el rango de selección
+    if (numeroCita < 1 || numeroCita > totalCitas) {
+        system("color 4F");
+        cout << "\t\t[!] Numero de ID invalido.\n\n";
+        system("pause");
+        return;
+    }
+
+    int idx = numeroCita - 1; // Ajustar al índice del arreglo (0 a totalCitas-1)
+
+    // Pedir confirmación explícita de seguridad
+    char confirmacion;
+    cout << "\t\t¿Esta seguro de que desea eliminar esta cita? (s/n): ";
+    cin >> confirmacion;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    if (confirmacion == 's' || confirmacion == 'S') {
+        // Ciclo para reorganizar el arreglo y "borrar" el elemento
+        for (int i = idx; i < totalCitas - 1; i++) {
+            agenda[i] = agenda[i + 1];
+        }
+        
+        // Reducir la cantidad total de citas activas
+        totalCitas--;
+
+        // Guardar los cambios actualizados de forma inmediata en el archivo plano
+        guardarEnArchivo();
+
+        system("color 2F");
+        cout << "\n\t\t[OK] Cita eliminada satisfactoriamente.\n\n";
+    } else {
+        cout << "\n\t\tOperacion cancelada. La cita no fue borrada.\n\n";
+    }
+
+    system("pause");
+}
